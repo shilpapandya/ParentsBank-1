@@ -1,0 +1,58 @@
+﻿@model PB.Models.Transaction
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Details</title>
+</head>
+<body>
+    <div>
+        <h4>Transaction</h4>
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.AccountId)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.AccountId)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.TransactionDate)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.TransactionDate)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.Amount)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.Amount)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.Note)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.Note)
+            </dd>
+    
+        </dl>
+    </div>
+    <p>
+        @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+        @Html.ActionLink("Back to List", "Index")
+    </p>
+</body>
+</html>
