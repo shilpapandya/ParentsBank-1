@@ -6,9 +6,9 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
-using PB.Models;
+using ParentsBankProject.Models;
 
-namespace PB.Controllers
+namespace ParentsBankProject.Controllers
 {
     public class TransactionsController : Controller
     {
@@ -46,10 +46,31 @@ namespace PB.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,AccountId,TransactionDate,Amount,Note")] Transaction transaction)
+        public ActionResult Create([Bind(Include = "Id,AccountId,transactionDate,transactionAmount,note")] Transaction transaction)
         {
             if (ModelState.IsValid)
             {
+
+                decimal accBalance = 0;
+                for (int i = 0; i < db.Transactions.Count(); i++)
+                {
+                    List<Transaction> Transactions = new List<Transaction>();
+                    Transactions = db.Transactions.ToList();
+                    if (Transactions[i].AccountId == transaction.AccountId)
+
+                    {
+                        accBalance = accBalance + Transactions[i].transactionAmount;
+                    }
+
+                }
+                if (Math.Abs(transaction.transactionAmount) > accBalance && transaction.transactionAmount < 0)
+                {
+                    ViewBag.errorMessage = "Debit amount cannot be greater than account balance";
+                    ViewBag.AccountId = new SelectList(db.Accounts, "Id", "Owner", transaction.AccountId);
+                    return View(transaction);
+
+                }
+
                 db.Transactions.Add(transaction);
                 db.SaveChanges();
                 return RedirectToAction("Index");
@@ -78,7 +99,7 @@ namespace PB.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,AccountId,TransactionDate,Amount,Note")] Transaction transaction)
+        public ActionResult Edit([Bind(Include = "Id,AccountId,transactionDate,transactionAmount,note")] Transaction transaction)
         {
             if (ModelState.IsValid)
             {

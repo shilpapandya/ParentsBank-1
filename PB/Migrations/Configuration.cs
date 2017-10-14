@@ -1,18 +1,18 @@
-namespace PB.Migrations
+namespace ParentsBankProject.Migrations
 {
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Migrations;
     using System.Linq;
 
-    internal sealed class Configuration : DbMigrationsConfiguration<PB.Models.ApplicationDbContext>
+    internal sealed class Configuration : DbMigrationsConfiguration<ParentsBankProject.Models.ApplicationDbContext>
     {
         public Configuration()
         {
             AutomaticMigrationsEnabled = true;
         }
 
-        protected override void Seed(PB.Models.ApplicationDbContext context)
+        protected override void Seed(ParentsBankProject.Models.ApplicationDbContext context)
         {
             //  This method will be called after migrating to the latest version.
 

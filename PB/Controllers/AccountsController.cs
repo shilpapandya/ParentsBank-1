@@ -6,9 +6,9 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
-using PB.Models;
+using ParentsBankProject.Models;
 
-namespace PB.Controllers
+namespace ParentsBankProject.Controllers
 {
     public class AccountsController : Controller
     {
@@ -17,7 +17,7 @@ namespace PB.Controllers
         // GET: Accounts
         public ActionResult Index()
         {
-            return View(db.Accounts.ToList());
+            return View(db.Accounts.Where(x=>x.Owner== User.Identity.Name).ToList() );
         }
 
         // GET: Accounts/Details/5
@@ -46,10 +46,17 @@ namespace PB.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Owner,Recipient,name,accountBalance,OpenDate,InterestRate")] Accounts accounts)
+        public ActionResult Create([Bind(Include = "Id,Owner,Recipient,name,InterestRate")] Accounts accounts)
         {
             if (ModelState.IsValid)
             {
+
+                if (accounts.Owner.Equals(accounts.Recipient, StringComparison.OrdinalIgnoreCase))
+                {
+                    ViewBag.errorMessage = "Email ID of owner and child cannot be same";
+                    return View(accounts);
+                }
+
                 db.Accounts.Add(accounts);
                 db.SaveChanges();
                 return RedirectToAction("Index");
@@ -78,7 +85,7 @@ namespace PB.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Owner,Recipient,name,accountBalance,OpenDate,InterestRate")] Accounts accounts)
+        public ActionResult Edit([Bind(Include = "Id,Owner,Recipient,name,InterestRate")] Accounts accounts)
         {
             if (ModelState.IsValid)
             {

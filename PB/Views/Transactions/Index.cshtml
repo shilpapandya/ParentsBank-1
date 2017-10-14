@@ -1,4 +1,4 @@
-﻿@model IEnumerable<PB.Models.Transaction>
+﻿@model IEnumerable<ParentsBankProject.Models.Transaction>
 
 @{
     Layout = null;
@@ -21,13 +21,13 @@
                 @Html.DisplayNameFor(model => model.AccountId)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.TransactionDate)
+                @Html.DisplayNameFor(model => model.transactionDate)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Amount)
+                @Html.DisplayNameFor(model => model.transactionAmount)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Note)
+                @Html.DisplayNameFor(model => model.note)
             </th>
             <th></th>
         </tr>
@@ -38,13 +38,13 @@
                 @Html.DisplayFor(modelItem => item.AccountId)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.TransactionDate)
+                @Html.DisplayFor(modelItem => item.transactionAmount)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Amount)
+                @Html.DisplayFor(modelItem => item.transactionAmount)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Note)
+                @Html.DisplayFor(modelItem => item.note)
             </td>
             <td>
                 @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |

@@ -1,24 +1,24 @@
-﻿@model PB.Models.Transaction
+﻿@model ParentsBankProject.Models.Transaction
 
 @{
-    Layout = null;
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<!DOCTYPE html>
-
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>Create</title>
-</head>
-<body>
-    @using (Html.BeginForm()) 
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            @using (Html.BeginForm()) 
     {
         @Html.AntiForgeryToken()
         
         <div class="form-horizontal">
-            <h4>Transaction</h4>
-            <hr />
+            <h2>
+                Create New Transaction
+                <span class="pull-right">
+                    <a href="/Accounts/" class="btn btn-theme btn-rounded btn-small">Back to List</a>
+                </span>
+            </h2>
+            <hr class="colorgraph">
             @Html.ValidationSummary(true, "", new { @class = "text-danger" })
             <div class="form-group">
                 @Html.LabelFor(model => model.AccountId, htmlAttributes: new { @class = "control-label col-md-2" })
@@ -29,26 +29,26 @@
             </div>
     
             <div class="form-group">
-                @Html.LabelFor(model => model.TransactionDate, htmlAttributes: new { @class = "control-label col-md-2" })
+                @Html.LabelFor(model => model.transactionDate, htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
-                    @Html.EditorFor(model => model.TransactionDate, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.TransactionDate, "", new { @class = "text-danger" })
+                    @Html.EditorFor(model => model.transactionDate, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.transactionDate, "", new { @class = "text-danger" })
                 </div>
             </div>
     
             <div class="form-group">
-                @Html.LabelFor(model => model.Amount, htmlAttributes: new { @class = "control-label col-md-2" })
+                @Html.LabelFor(model => model.transactionAmount, htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
-                    @Html.EditorFor(model => model.Amount, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.Amount, "", new { @class = "text-danger" })
+                    @Html.EditorFor(model => model.transactionAmount, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.transactionAmount, "", new { @class = "text-danger" })
                 </div>
             </div>
     
             <div class="form-group">
-                @Html.LabelFor(model => model.Note, htmlAttributes: new { @class = "control-label col-md-2" })
+                @Html.LabelFor(model => model.note, htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
-                    @Html.EditorFor(model => model.Note, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.Note, "", new { @class = "text-danger" })
+                    @Html.EditorFor(model => model.note, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.note, "", new { @class = "text-danger" })
                 </div>
             </div>
     
@@ -60,8 +60,5 @@
         </div>
     }
     
-    <div>
-        @Html.ActionLink("Back to List", "Index")
-    </div>
-</body>
-</html>
+    
+

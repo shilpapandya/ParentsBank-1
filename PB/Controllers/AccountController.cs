@@ -8,9 +8,9 @@ using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
-using PB.Models;
+using ParentsBankProject.Models;
 
-namespace PB.Controllers
+namespace ParentsBankProject.Controllers
 {
     [Authorize]
     public class AccountController : Controller
@@ -65,7 +65,7 @@ namespace PB.Controllers
         // POST: /Account/Login
         [HttpPost]
         [AllowAnonymous]
-       // [ValidateAntiForgeryToken]
+        [ValidateAntiForgeryToken]
         public async Task<ActionResult> Login(LoginViewModel model, string returnUrl)
         {
             if (!ModelState.IsValid)

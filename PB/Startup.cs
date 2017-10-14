@@ -1,8 +1,8 @@
 ﻿using Microsoft.Owin;
 using Owin;
 
-[assembly: OwinStartupAttribute(typeof(PB.Startup))]
-namespace PB
+[assembly: OwinStartupAttribute(typeof(ParentsBankProject.Startup))]
+namespace ParentsBankProject
 {
     public partial class Startup
     {

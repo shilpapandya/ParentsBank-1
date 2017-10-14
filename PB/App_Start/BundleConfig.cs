@@ -1,7 +1,7 @@
 ﻿using System.Web;
 using System.Web.Optimization;
 
-namespace PB
+namespace ParentsBankProject
 {
     public class BundleConfig
     {
