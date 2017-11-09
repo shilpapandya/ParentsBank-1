@@ -1,0 +1,65 @@
+﻿@model IEnumerable<ProjBank.Models.Transaction>
+
+@{
+    ViewBag.Title = "Transactions";
+}
+
+<div class="container">
+    <div class="row">
+
+
+<h2>
+     Transaction Details
+
+    <span class="pull-right">
+        <a href="/Transactions/Create/" class="btn btn-primary">Create New</a>
+    </span>
+    
+</h2>
+<hr class="colorgraph"/>
+<p>
+  
+    
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Accounts.Recipient)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.transactionDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.transactionAmount)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.note)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Accounts.Recipient)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.transactionDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.transactionAmount)
+            @Html.ValidationSummary()
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.note)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
+            @Html.ActionLink("Delete", "Delete", new { id = item.Id }) |
+            @Html.ActionLink("Details", "Details", new { id=item.Id })
+            
+        </td>
+    </tr>
+}
+
+</table>

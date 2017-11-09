@@ -1,0 +1,79 @@
+﻿@model ProjBank.Models.Account
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="container">
+<ol class="breadcrumb">
+    <li><a href="/Home/">Home</a></li>
+    <li><a href="/Accounts/">Accounts</a></li>
+    <li class="active">Delete</li>
+</ol>
+</div>
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+
+            @ViewBag.errorMessage
+            <h2>
+                Are you sure you want to delete this?
+                <span class="pull-right">
+                    <a href="/Accounts/" class="btn btn-theme btn-rounded btn-small">Back to List</a>
+                </span>
+            </h2>
+            <hr class="colorgraph" />
+
+            <dl class="dl-horizontal">
+                <dt>
+                    @Html.DisplayNameFor(model => model.Owner)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Owner)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.Recipient)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Recipient)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.name)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.name)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.OpenDate)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.OpenDate)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.InterestRate)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.InterestRate)
+                </dd>
+
+            </dl>
+
+            @using (Html.BeginForm())
+            {
+                @Html.AntiForgeryToken()
+
+                <div class="form-actions no-color">
+                    <input type="submit" value="Delete" class="btn btn-danger" />
+                </div>
+            }
+        </div>
+        </body>
+        </html>

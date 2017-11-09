@@ -1,0 +1,68 @@
+﻿@model ProjBank.Models.Transaction
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<div class="container">
+    <ol class="breadcrumb">
+        <li><a href="/Home/">Home</a></li>
+        <li><a href="/Transactions/"> Transactions </a></li>
+        <li class="active">Delete</li>
+    </ol>
+
+</div>
+
+
+<div class="container">
+    <div class="row">
+     @ViewBag.errorMessage
+    <h3>Are you sure you want to delete this?</h3>
+
+    <h4>Transaction Delete</h4>
+    <hr class="colorgraph" />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Accounts.Owner)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Accounts.Owner)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.transactionDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.transactionDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.transactionAmount)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.transactionAmount)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.note)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.note)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>

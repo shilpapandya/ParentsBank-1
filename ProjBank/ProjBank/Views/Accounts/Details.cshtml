@@ -1,0 +1,389 @@
+﻿@model ProjBank.Models.Account
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="container">
+    <ol class="breadcrumb">
+        <li><a href="/Home/">Home</a></li>
+        <li><a href="/Accounts/">Accounts</a></li>
+        <li class="active">Details</li>
+    </ol>
+</div>
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+
+
+            <h2>
+                Account Details
+                <span class="pull-right">
+                    <a href="/Accounts/" class="btn btn-theme btn-rounded btn-small">Back to List</a>
+                </span>
+            </h2>
+            <hr class="colorgraph" />
+
+            <div class="row">
+                <div class="col-md-12">
+                    @{
+                        if (Model.IsOwner(User.Identity.Name))
+                        {
+                            <span class="pull-left">
+                                <a href="/Accounts/Edit/@Model.Id" class="btn btn-danger btn-flat btn-small">Edit Details</a>
+                            </span>
+                        }
+                    }
+                    <table class="table table-bordered">
+                        <thead>
+                            <th>
+
+                                @Html.DisplayNameFor(model => model.Owner)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Recipient)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.name)
+                            </th>
+                            <th>
+                               <!--
+                                   @Html.DisplayNameFor(model => model.getTotalAmount)
+                               --> 
+                                Total Balance
+                            </th>
+
+
+                            <th>
+                               <!-- 
+                                   @Html.DisplayNameFor(model => model.OpenDate)
+                               --> 
+                                Account Opening Date
+                            </th>
+
+                            <th>
+                                @Html.DisplayNameFor(model => model.InterestRate)
+                            </th>
+                        </thead>
+
+                        <tbody>
+
+                        <td>
+                            @Html.DisplayFor(model => model.Owner)
+                        </td>
+
+                        <td>
+                            @Html.DisplayFor(model => model.Recipient)
+                        </td>
+
+                        <td>
+                            @Html.DisplayFor(model => model.name)
+                        </td>
+
+                        <td>
+                            @{
+                                //var totalAmt = Model.getTotalAmount + Model.interestAccrued;
+                                var princ = Model.getTotalAmount - Model.interestAccrued;
+                            }
+                            @Model.getTotalAmount 
+                        </td>
+
+                        <td>
+                            @Html.DisplayFor(model => model.OpenDate)
+                        </td>
+
+                        <td>
+                            @Html.DisplayFor(model => model.InterestRate)
+                        </td>
+
+                        </tbody>
+
+                    </table>
+
+
+                </div>
+
+                <div class="col-md-6">
+                    <div class="bar-chart">
+
+                        <div class="legend">
+                            <div class="item">
+                                <h4>Principal</h4>
+                            </div>
+                            <div class="item text-right pull-right">
+                                <h4>Interest</h4>
+                            </div>
+                        </div>
+
+
+                        <div class="chart clearfix">
+                            <div class="item">
+                                <div class="bar">
+                                    
+                                    <span class="percent" id="interest_accured">@Model.interestAccrued</span>
+
+                                    
+                                    <div class="item-progress" data-percent="@Html.DisplayFor(model => model.getTotalAmount)">
+                                        @{
+                                         //   var principal = Model.getTotalAmount - Model.interestAccrued;
+                                        }
+                                        
+                                        <div class="item-progress" data-percent="@princ">
+                                            <span class="title" id="principal" data-total-amt="@princ">@princ</span>
+                                        </div>
+                                    </div>
+                                    <!-- //.item-progress -->
+                                </div>
+                                <!-- //.bar -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    @{
+                        if (Model.interestAccrued >= 10 && (Model.IsRecipient(User.Identity.Name)))
+                        {
+                            <div class="row">
+                                <div class="pull-right ">
+                                    <img src="" />
+                                    Congratulations! You've earned more than $10 of interest.
+                                </div>
+
+                            </div>
+
+                        }
+                    }
+
+                </div>
+            </div>
+            <br />
+            <hr />
+            <div class="row">
+
+
+                <div class="card">
+                    <ul class="nav-tabs nav-tabs-ac nav" role="tablist">
+                        <li role="presentation" class="active">
+                            <a href="#home" aria-controls="home" role="tab" data-toggle="tab" style="color:#333 !important;">Transaction History</a>
+                        </li>
+                        <li role="presentation">
+                            <a href="#profile" aria-controls="profile" role="tab" data-toggle="tab" style="color:#333 !important;">Wishlists</a>
+                        </li>
+
+                    </ul>
+                    <!-- Tab panes -->
+                    <div class="tab-content">
+                        <div role="tabpanel" class="tab-pane active" id="home" style="margin-top:-30px">
+                            @{
+                                if (Model.IsOwner(User.Identity.Name))
+                                {
+                                    <h4>
+                                        <span class="pull-rig">
+                                            <a href="/Transactions/Create/@Model.Id" class="btn btn-small btn-info"> Create New Transaction</a>
+                                        </span>
+                                    </h4>
+                                   
+                                }
+
+                            }
+
+
+                            <table class="table table-bordered table-condensed table-hover">
+                                <tr>
+                                    <th>
+                                        @Html.DisplayNameFor(model => Model.Transactions.FirstOrDefault().Accounts.Owner)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => Model.Transactions.FirstOrDefault().transactionDate)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => Model.Transactions.FirstOrDefault().transactionAmount)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => Model.Transactions.FirstOrDefault().note)
+                                    </th>
+                                   
+                                    <th></th>
+                                </tr>
+
+                                @foreach (var item in Model.Transactions.OrderBy(o => o.transactionDate) )
+                                {
+                                    <tr>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Accounts.Owner)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.transactionDate)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.transactionAmount)
+                                            @Html.ValidationSummary()
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.note)
+                                        </td>
+                                        <td>
+                                           @{
+                                               if (Model.IsOwner(User.Identity.Name))
+                                               {
+                                                @Html.ActionLink("Edit", "Edit", new { Controller = "Transactions", id = item.Id }) @Html.Raw("|")
+                                                @Html.ActionLink("Delete", "Delete", new { Controller = "Transactions", id = item.Id }) @Html.Raw("|")
+                                               }
+                                               @Html.ActionLink("Details", "Details", new { Controller = "Transactions", id = item.Id })
+                                           }
+
+                                           
+                                        </td>
+                                    </tr>
+                                }
+
+                            </table>
+
+
+                        </div>
+
+                        <div role="tabpanel" class="tab-pane" id="profile" style="margin-top:-30px">
+                            <div>
+                                <h4>
+                                    <span class="pull-rig">
+                                        <a href="/WishLists/Create/@Model.Id" class="btn btn-small btn-info"> Create New WishList</a>
+                                    </span>
+                                </h4>
+                                <table class="table table-condensed table-bordered">
+                                    <tr>
+                                        <!-- <th>
+                                            @Html.DisplayNameFor(model => Model.Wishlist.FirstOrDefault().AccountId)
+                                        </th> -->
+                                        <th>
+                                            @Html.DisplayNameFor(model => Model.Wishlist.FirstOrDefault().DateAdded)
+                                        </th>
+                                        <th>
+                                            @Html.DisplayNameFor(model => Model.Wishlist.FirstOrDefault().Cost)
+                                        </th>
+                                        <th>
+                                            @Html.DisplayNameFor(model => Model.Wishlist.FirstOrDefault().Description)
+                                        </th>
+                                        <th>
+                                            @Html.DisplayNameFor(model => Model.Wishlist.FirstOrDefault().Link)
+                                        </th>
+
+                                        <th>
+                                            @Html.DisplayNameFor(model => Model.Wishlist.FirstOrDefault().Purchased)
+                                        </th>
+                                        <th>
+                                            Affordability
+                                        </th>
+                                        <th>If Purchased</th>
+                                        <th></th>
+                                    </tr>
+
+                                    @foreach (var item in Model.Wishlist)
+                                    {
+
+                                        
+                                        var isAffordable = "";
+                                        if (item.Account.getTotalAmount < item.Cost)
+                                        {
+                                            isAffordable = "danger";
+                                        }
+                                        
+
+                                        <tr class="@isAffordable">
+
+                                            <!--<td>
+                                                @Html.DisplayFor(modelItem => item.AccountId)
+                                            </td> -->
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.DateAdded)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.Cost)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.Description)
+                                            </td>
+                                            <td>
+                                                <a href="@item.Link" target="_blank">@item.Link </a>
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.Purchased)
+                                            </td>
+
+                                            @if (item.Account.getTotalAmount > item.Cost)
+                                            {
+                                                <td>
+                                                    <div class="progress progress-striped active">
+                                                        <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%;">
+                                                            100%
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    (
+                                                    @{
+                                                        var remaining = Model.getTotalAmount - item.Cost;
+                                                    }
+                                                    @remaining
+                                                    )
+                                                </td>
+                                            }
+                                            else
+                                            {
+                                                
+                                                <td>
+                                                   
+                                                    @{
+                                                        var diff = item.Cost - item.Account.getTotalAmount;
+                                                        decimal per = Decimal.Round( ( 1 - (diff / item.Cost) ) * 100 );
+                                                    }
+                                                   
+                                                    <div class="progress progress-striped active">
+                                                        <div class="progress-bar" role="progressbar" aria-valuenow="@per" aria-valuemin="0" aria-valuemax="100" style="width: @per%; min-width:2em">
+                                                            @per%
+                                                        </div>
+                                                     </div>
+                                                        
+                                                </td>
+                                                <td> Need $@diff  more</td>
+                                                        }
+
+                                            <td>
+                                                @{
+                                                    if (Model.IsOwner(User.Identity.Name))
+                                                    {
+                                                        @Html.ActionLink("Edit", "Edit", new { Controller = "WishLists", id = item.Id }) @Html.Raw("|")
+                                                        @Html.ActionLink("Delete", "Delete", new { Controller = "WishLists", id = item.Id }) @Html.Raw("|")
+                                                    }
+                                                    @Html.ActionLink("Details", "Details", new { Controller = "WishLists", id = item.Id })
+                                                }
+                                            </td>
+                                        </tr>
+                                                        }
+
+                                </table>
+
+
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+
+
+
+
+            </div>
+
+        </div>
+
+
+
+
+
+
+
+
+       
+
+    </div>
+</div>
